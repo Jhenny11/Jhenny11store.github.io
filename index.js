@@ -10,44 +10,23 @@ var cashInput = document.getElementById("cash");
 var changeInput = document.getElementById("change");
 
 function addOrder() {
-    carts.textContent = "";
-
-    if (parseFloat(qty1.value) > 0) {
-        var order1 = qty1.value.toString() + " pcs x " + product1.textContent + " - Php " + (parseFloat(qty1.value) * parseFloat(price1.textContent)).toFixed(2) + "\n";
-        carts.textContent += order1;
-    }
-
-    if (parseFloat(qty2.value) > 0) {
-        var order2 = qty2.value.toString() + " pcs x " + product2.textContent + " - Php " + (parseFloat(qty2.value) * parseFloat(price2.textContent)).toFixed(2) + "\n";
-        carts.textContent += order2;
-    }
-
-    updateTotal(); // Update total after adding orders
+            carts.textContent = "";
+            let totalAmount = 0;
+            if (parseFloat(qty1.value) > 0) {
+                var order = qty1.value.toString() + 'pc/s x ' + price1.textContent + '-----' + product1.textContent + '-----Php' + (parseFloat(qty1.value) * parseFloat(price1.textContent)) + '\n';
+                carts.textContent += order;
+                totalAmount += parseFloat(qty1.value) * parseFloat(price1.textContent);
+            }
+ total.value = totalAmount.toFixed(2);
+            calculateChange();
 }
-
-function updateTotal() {
-    var total = 0;
-
-    total += parseFloat(qty1.value) * parseFloat(price1.textContent);
-
-    total += parseFloat(qty2.value) * parseFloat(price2.textContent);
-
-    totalInput.value = total.toFixed(2); // Update total input field
-    calculateChange(); // Calculate change after updating total
-}
-
-function calculateChange() {
-    var total = parseFloat(totalInput.value);
-    var cash = parseFloat(cashInput.value);
-
-    if (!isNaN(total) && !isNaN(cash)) {
-        var change = cash - total;
-        changeInput.value = change.toFixed(2); // Update change input field
-    } else {
-        changeInput.value = "";
-    }
-}
-
-qty1.addEventListener("keyup", addOrder);
-qty2.addEventListener("keyup", addOrder);
-cashInput.addEventListener("input", calculateChange);
+ function calculateChange() {
+            let totalAmount = parseFloat(total.value);
+            let cashTendered = parseFloat(cash.value);
+            if (!isNaN(cashTendered) && cashTendered >= totalAmount) {
+                change.value = (cashTendered - totalAmount).toFixed(2);
+            } else {
+                change.value = "";
+            }
+        }
+        document.getElementById('cash').onkeyup = calculateChange;
