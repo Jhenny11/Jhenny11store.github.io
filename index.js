@@ -50,4 +50,4 @@ function calculateChange() {
 
 qty1.addEventListener("keyup", addOrder);
 qty2.addEventListener("keyup", addOrder);
-cashInput.addEventListener("input", calculateChange
+cashInput.addEventListener("input", calculateChange);
